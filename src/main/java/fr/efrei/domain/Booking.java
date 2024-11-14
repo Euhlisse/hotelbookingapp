@@ -1,10 +1,9 @@
 package fr.efrei.domain;
 
-import java.time.LocalDate;
 import java.util.Date;
 
 public class Booking {
-    private int bookingId;
+    private String bookingId;
     private Room room;
     private Customer customer;
     private Date arrivalDate;
@@ -13,21 +12,17 @@ public class Booking {
     private int nbPeople;
     private double totalPrice;
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-    //future potential feature to implement : nb of people for the booking that should be compared (inferior or equal)
-    //to the capacity of the room
+    private Booking(){}
 
-    public Booking(int i, Customer customer, Room selectedRoom, LocalDate arrivalDate, LocalDate departureDate, int nbPeople){ }
-    public Booking(Room room, Customer customer, Date arrivalDate, Date departureDate, Employee employee, int nbPeople, double totalPrice) {
-        this.room = room;
-        this.customer = customer;
-        this.arrivalDate = arrivalDate;
-        this.departureDate = departureDate;
-        this.employee = employee;
-        this.nbPeople = nbPeople;
-        this.totalPrice = totalPrice;
+    private Booking(BuilderBooking builder) {
+        this.bookingId=builder.bookingId;
+        this.room = builder.room;
+        this.customer = builder.customer;
+        this.arrivalDate = builder.arrivalDate;
+        this.departureDate = builder.departureDate;
+        this.employee = builder.employee;
+        this.nbPeople = builder.nbPeople;
+        this.totalPrice = builder.totalPrice;
     }
 
     public Room getRoom() {
@@ -43,7 +38,7 @@ public class Booking {
     public Employee getEmployee() { return employee; }
     public int getNbPeople() { return nbPeople; }
     public double getTotalPrice() { return totalPrice; }
-    public int getBookingId() {return bookingId; }
+    public String getBookingId() {return bookingId; }
 
     @Override
     public String toString() {
@@ -57,5 +52,70 @@ public class Booking {
                 ", totalPrice=" + totalPrice +
                 '}';
     }
+    public static class BuilderBooking {
+        private String bookingId;
+        private Room room;
+        private Customer customer;
+        private Date arrivalDate;
+        private Date departureDate;
+        private Employee employee;
+        private int nbPeople;
+        private double totalPrice;
+
+        public BuilderBooking setBookingId(String bookingId) {
+            this.bookingId = bookingId;
+            return this;
+        }
+
+        public BuilderBooking setRoom(Room room) {
+            this.room = room;
+            return this;
+        }
+
+        public BuilderBooking setCustomer(Customer customer) {
+            this.customer = customer;
+            return this;
+        }
+
+        public BuilderBooking setArrivalDate(Date arrivalDate) {
+            this.arrivalDate = arrivalDate;
+            return this;
+        }
+
+        public BuilderBooking setDepartureDate(Date departureDate) {
+            this.departureDate = departureDate;
+            return this;
+        }
+
+        public BuilderBooking setEmployee(Employee employee) {
+            this.employee = employee;
+            return this;
+        }
+
+        public BuilderBooking setNbPeople(int nbPeople) {
+            this.nbPeople = nbPeople;
+            return this;
+        }
+
+        public BuilderBooking setTotalPrice(double totalPrice) {
+            this.totalPrice = totalPrice;
+            return this;
+        }
+        public BuilderBooking copy(Booking booking){
+            this.bookingId=booking.getBookingId();
+            this.room = booking.getRoom();
+            this.customer = booking.getCustomer();
+            this.arrivalDate = booking.getArrivalDate();
+            this.departureDate = booking.getDepartureDate();
+            this.employee = booking.getEmployee();
+            this.nbPeople = booking.getNbPeople();
+            this.totalPrice = booking.getTotalPrice();
+            return this;
+        }
+        public Booking build(){
+            return new Booking(this);
+        }
+    }
+
 
 }
