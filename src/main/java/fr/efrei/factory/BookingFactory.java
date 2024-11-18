@@ -4,10 +4,12 @@ import fr.efrei.domain.Booking;
 import fr.efrei.domain.Customer;
 import fr.efrei.domain.Employee;
 import fr.efrei.domain.Room;
-import java.util.Date;
+
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public class BookingFactory {
-    public static Booking createBooking(Room room, Customer customer, Date arrivalDate, Date departureDate, Employee employee, int nbPeople, double totalPrice){
+    public static Booking createBooking(Room room, Customer customer, LocalDate arrivalDate, LocalDate departureDate, Employee employee, int nbPeople, double totalPrice){
         String bookingId = Helper.generateId();
         if (Helper.isNullOrEmpty(bookingId)
                 ||Helper.isNullOrEmpty(String.valueOf(room))
@@ -19,10 +21,10 @@ public class BookingFactory {
                 ||Helper.isNullOrEmpty(String.valueOf(totalPrice))){
             return null;
         }
-        if (arrivalDate.after(departureDate)||arrivalDate.equals(departureDate)){
+        if (arrivalDate.isAfter(departureDate)||arrivalDate.equals(departureDate)){
             return null;
         }
-        if (nbPeople<=0||totalPrice<room.getNightPrice()*(departureDate.getDay()-arrivalDate.getDay())){
+        if (nbPeople<=0||totalPrice<room.getNightPrice()*(ChronoUnit.DAYS.between(arrivalDate, departureDate))){
             return null;
         }
         return new Booking.BuilderBooking()

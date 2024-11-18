@@ -1,13 +1,13 @@
 package fr.efrei.domain;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Booking {
     private String bookingId;
     private Room room;
     private Customer customer;
-    private Date arrivalDate;
-    private Date departureDate;
+    private LocalDate arrivalDate;
+    private LocalDate departureDate;
     private Employee employee;
     private int nbPeople;
     private double totalPrice;
@@ -31,10 +31,10 @@ public class Booking {
     public Customer getCustomer() {
         return customer;
     }
-    public Date getArrivalDate() {
+    public LocalDate getArrivalDate() {
         return arrivalDate;
     }
-    public Date getDepartureDate() { return departureDate; }
+    public LocalDate getDepartureDate() { return departureDate; }
     public Employee getEmployee() { return employee; }
     public int getNbPeople() { return nbPeople; }
     public double getTotalPrice() { return totalPrice; }
@@ -56,8 +56,8 @@ public class Booking {
         private String bookingId;
         private Room room;
         private Customer customer;
-        private Date arrivalDate;
-        private Date departureDate;
+        private LocalDate arrivalDate;
+        private LocalDate departureDate;
         private Employee employee;
         private int nbPeople;
         private double totalPrice;
@@ -77,12 +77,12 @@ public class Booking {
             return this;
         }
 
-        public BuilderBooking setArrivalDate(Date arrivalDate) {
+        public BuilderBooking setArrivalDate(LocalDate arrivalDate) {
             this.arrivalDate = arrivalDate;
             return this;
         }
 
-        public BuilderBooking setDepartureDate(Date departureDate) {
+        public BuilderBooking setDepartureDate(LocalDate departureDate) {
             this.departureDate = departureDate;
             return this;
         }
