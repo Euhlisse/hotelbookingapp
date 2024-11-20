@@ -1,10 +1,8 @@
 package fr.efrei.factory;
-
 import fr.efrei.domain.Booking;
 import fr.efrei.domain.Customer;
 import fr.efrei.domain.Employee;
 import fr.efrei.domain.Room;
-
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
@@ -19,6 +17,9 @@ public class BookingFactory {
                 ||Helper.isNullOrEmpty(String.valueOf(employee))
                 ||Helper.isNullOrEmpty(String.valueOf(nbPeople))
                 ||Helper.isNullOrEmpty(String.valueOf(totalPrice))){
+            return null;
+        }
+        if(arrivalDate.isBefore(LocalDate.now())||departureDate.isBefore(LocalDate.now())){
             return null;
         }
         if (arrivalDate.isAfter(departureDate)||arrivalDate.equals(departureDate)){
