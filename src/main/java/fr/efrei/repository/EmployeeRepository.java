@@ -1,12 +1,15 @@
 package fr.efrei.repository;
 
 import fr.efrei.domain.Employee;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class EmployeeRepository implements IEmployeeRepository{
     private static IEmployeeRepository repository = null;
     private List<Employee> employeeList;
+    private EmployeeRepository(){employeeList=new ArrayList<Employee>();}
     public static IEmployeeRepository getRepository(){
         if (repository == null){
             repository = new EmployeeRepository();

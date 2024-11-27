@@ -10,6 +10,7 @@ public class BookingRepository implements IBookingRepository{
 
     private static IBookingRepository repository = null;
     private List<Booking> bookingList;
+    private BookingRepository(){bookingList=new ArrayList<Booking>();}
     public static IBookingRepository getRepository(){
         if (repository==null){
             repository = new BookingRepository();

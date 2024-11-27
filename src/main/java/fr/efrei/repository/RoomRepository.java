@@ -1,6 +1,8 @@
 package fr.efrei.repository;
+
 import fr.efrei.domain.Room;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -9,6 +11,7 @@ public class RoomRepository implements IRoomRepository{
 
     private static IRoomRepository repository = null;
     private List<Room> roomList;
+    private RoomRepository(){roomList=new ArrayList<Room>();}
     public static IRoomRepository getRepository(){
         if (repository==null){
             repository = new RoomRepository();
@@ -46,7 +49,6 @@ public class RoomRepository implements IRoomRepository{
         return null;
     }
 
-
     @Override
     public boolean delete(Integer roomNumber) {
         return (roomList.remove(read(roomNumber)));
@@ -57,6 +59,4 @@ public class RoomRepository implements IRoomRepository{
         return roomList;
     }
 
-
 }
-

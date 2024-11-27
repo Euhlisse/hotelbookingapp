@@ -1,12 +1,15 @@
 package fr.efrei.repository;
 
 import fr.efrei.domain.Customer;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class CustomerRepository implements ICustomerRepository{
     private static ICustomerRepository repository = null;
     private List<Customer> customerList;
+    private CustomerRepository(){customerList=new ArrayList<Customer>();}
     public static ICustomerRepository getRepository(){
         if (repository == null){
             repository = new CustomerRepository();
