@@ -2,12 +2,15 @@ package fr.efrei.domain;
 
 import java.time.LocalDate;
 
+import static java.lang.StringTemplate.STR;
+
 public class Employee {
     private String employeeNumber;
     private String firstName;
     private String lastName;
     private LocalDate birthDate;
-    private EmployeeType jobType;
+    private EmployeeType employeeType;
+    private String password;
 
     private Employee() { }
     private Employee(BuilderEmployee builder) {
@@ -15,21 +18,24 @@ public class Employee {
         this.firstName = builder.firstName;
         this.lastName = builder.lastName;
         this.birthDate = builder.birthDate;
-        this.jobType = builder.jobType;
+        this.employeeType = builder.employeeType;
+        this.password = builder.password;
     }
 
     public String getEmployeeNumber(){ return employeeNumber; }
     public String getFirstName() { return firstName; }
     public String getLastName() { return lastName; }
     public LocalDate getBirthDate() { return birthDate; }
-    public EmployeeType getJobType() { return jobType; }
+    public EmployeeType getEmployeeType() { return employeeType; }
+    public String getPassword() { return password; }
 
     public static class BuilderEmployee{
         private String employeeNumber;
         private String firstName;
         private String lastName;
         private LocalDate birthDate;
-        private EmployeeType jobType;
+        private EmployeeType employeeType;
+        private String password;
 
         public BuilderEmployee setEmployeeNumber(String employeeNumber) {
             this.employeeNumber = employeeNumber;
@@ -47,8 +53,12 @@ public class Employee {
             this.birthDate = birthDate;
             return this;
         }
-        public BuilderEmployee setJobType(EmployeeType jobType) {
-            this.jobType = jobType;
+        public BuilderEmployee setEmployeeType(EmployeeType employeeType) {
+            this.employeeType = employeeType;
+            return this;
+        }
+        public BuilderEmployee setPassword(String password) {
+            this.password = password;
             return this;
         }
 
@@ -57,7 +67,8 @@ public class Employee {
             this.firstName=employee.getFirstName();
             this.lastName= employee.getLastName();
             this.birthDate = employee.getBirthDate();
-            this.jobType= employee.getJobType();
+            this.employeeType= employee.getEmployeeType();
+            this.password = employee.getPassword();
             return this;
         }
         public Employee build(){
@@ -67,11 +78,6 @@ public class Employee {
 
     @Override
     public String toString() {
-        return "Employee{" +
-                "employeeNumber='" + employeeNumber + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", birthDate=" + birthDate + '\'' +
-                ", jobType='" + jobType + '}';
+        return STR."Employee{employeeNumber='\{employeeNumber}', firstName='\{firstName}', lastName='\{lastName}', birthDate=\{birthDate}, employeeType=\{employeeType}, password='\{password}'}";
     }
 }

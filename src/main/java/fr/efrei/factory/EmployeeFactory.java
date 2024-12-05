@@ -4,18 +4,19 @@ import fr.efrei.domain.Employee;
 import fr.efrei.domain.EmployeeType;
 
 import java.time.LocalDate;
-import java.util.Set;
 
 public class EmployeeFactory {
-    public static Employee createEmployee(String employeeNumber, String firstName, String lastName, LocalDate birthDate, EmployeeType jobType){
+    public static Employee createEmployee(String employeeNumber, String firstName, String lastName, LocalDate birthDate, EmployeeType employeeType, String password){
         if (Helper.isNullOrEmpty(employeeNumber)
             ||Helper.isNullOrEmpty(firstName)
             ||Helper.isNullOrEmpty(lastName)
-            ||Helper.isNullOrEmpty(String.valueOf(birthDate))){
+            ||Helper.isNullOrEmpty(String.valueOf(birthDate))
+            ||Helper.isNullOrEmpty(String.valueOf(employeeType))
+            ||Helper.isNullOrEmpty(password)){
                 return null;
         }
 
-        if (!EmployeeType.contains(jobType)){
+        if (!EmployeeType.contains(employeeType)){
             return null;
         }
 
@@ -28,7 +29,8 @@ public class EmployeeFactory {
                 .setFirstName(firstName)
                 .setLastName(lastName)
                 .setBirthDate(birthDate)
-                .setJobType(jobType)
+                .setEmployeeType(employeeType)
+                .setPassword(password)
                 .build();
     }
 }
