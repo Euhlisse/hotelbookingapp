@@ -1,5 +1,4 @@
 package fr.efrei.view;
-
 import fr.efrei.domain.Customer;
 import fr.efrei.domain.Room;
 import fr.efrei.domain.RoomType;
