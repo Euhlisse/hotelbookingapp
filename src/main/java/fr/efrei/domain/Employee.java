@@ -1,9 +1,5 @@
 package fr.efrei.domain;
-
 import java.time.LocalDate;
-
-import static java.lang.StringTemplate.STR;
-
 public class Employee {
     private String employeeNumber;
     private String firstName;
@@ -78,6 +74,6 @@ public class Employee {
 
     @Override
     public String toString() {
-        return STR."Employee{employeeNumber='\{employeeNumber}', firstName='\{firstName}', lastName='\{lastName}', birthDate=\{birthDate}, employeeType=\{employeeType}, password='\{password}'}";
+        return "Employee{employeeNumber ="+employeeNumber+", firstName ="+firstName+", lastName="+lastName+", birthDate ="+birthDate+", employeeType ="+employeeType+"password ="+password+"}";
     }
 }
