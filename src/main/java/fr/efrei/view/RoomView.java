@@ -22,9 +22,7 @@ import java.util.List;
 public class RoomView {
 
     protected static IRoomRepository roomRepository;
-
     public RoomView(){}
-
     public RoomView(IRoomRepository roomRepository){
         this.roomRepository = roomRepository;
     }
