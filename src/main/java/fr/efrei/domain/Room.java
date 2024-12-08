@@ -4,7 +4,7 @@ public class Room{
     private int roomNumber;
     private int capacity;
     private int floorNumber;
-    private String roomType;
+    private RoomType roomType;
     private double nightPrice;
 
     private Room() {}
@@ -23,7 +23,7 @@ public class Room{
         private int roomNumber;
         private int capacity;
         private int floorNumber;
-        private String roomType;
+        private RoomType roomType;
         private double nightPrice;
 
         public BuilderRoom setRoomNumber(int roomNumber){
@@ -38,7 +38,7 @@ public class Room{
             this.floorNumber = floorNumber;
             return this;
         }
-        public BuilderRoom setRoomType(String roomType){
+        public BuilderRoom setRoomType(RoomType roomType){
             this.roomType = roomType;
             return this;
         }
@@ -70,7 +70,7 @@ public class Room{
     }
     public int getCapacity() { return capacity; }
     public int getFloorNumber() { return floorNumber; }
-    public String getRoomType() { return roomType; }
+    public RoomType getRoomType() { return roomType; }
     public double getNightPrice() { return nightPrice; }
 
     @Override
