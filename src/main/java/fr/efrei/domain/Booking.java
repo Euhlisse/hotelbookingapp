@@ -43,11 +43,12 @@ public class Booking {
     @Override
     public String toString() {
         return "Booking{" +
-                "room=" + room +
-                ", customer=" + customer +
+                "booking id=" + bookingId +
+                "room number=" + room.getRoomNumber() +
+                ", customer=" + customer.getIdNumber() +
                 ", arrivalDate=" + arrivalDate +
                 ", departureDate=" + departureDate +
-                ", employee=" + employee +
+                ", employee=" + employee.getEmployeeNumber() +
                 ", nbPeople=" + nbPeople +
                 ", totalPrice=" + totalPrice +
                 '}';

@@ -33,11 +33,11 @@ public class Main {
         employeeRepository.create(EmployeeFactory.createEmployee( "John", "Smith", LocalDate.of(1985, 6, 15), EmployeeType.DIRECTOR,"zdc"));
         employeeRepository.create(EmployeeFactory.createEmployee( "Anna", "Taylor", LocalDate.of(1998, 12, 5), EmployeeType.STAFF_MEMBER,"abcd"));
         employeeRepository.create(EmployeeFactory.createEmployee( "James", "Brown", LocalDate.of(2000, 8, 19), EmployeeType.STAFF_MEMBER,"efgh"));
-        roomRepository.create(RoomFactory.createRoom(1, RoomType.Single));
-        roomRepository.create(RoomFactory.createRoom(2, RoomType.Double));
-        roomRepository.create(RoomFactory.createRoom(3, RoomType.Suite));
-        roomRepository.create(RoomFactory.createRoom(4, RoomType.Single));
-        roomRepository.create(RoomFactory.createRoom(5, RoomType.Double));
+        roomRepository.create(RoomFactory.createRoom(1, RoomType.SINGLE));
+        roomRepository.create(RoomFactory.createRoom(2, RoomType.DOUBLE));
+        roomRepository.create(RoomFactory.createRoom(3, RoomType.SUITE));
+        roomRepository.create(RoomFactory.createRoom(4, RoomType.SINGLE));
+        roomRepository.create(RoomFactory.createRoom(5, RoomType.DOUBLE));
         bookingRepository.create(BookingFactory.createBooking(
                 roomRepository.getAll().getFirst(), customerRepository.getAll().getFirst(), LocalDate.of(2024, 12, 15), LocalDate.of(2024, 12, 20), employeeRepository.getAll().getFirst(), 1));
         bookingRepository.create(BookingFactory.createBooking(

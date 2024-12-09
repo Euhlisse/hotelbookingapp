@@ -13,14 +13,14 @@ public class RoomFactory {
         double nightPrice=-0;
 
         switch (roomType){
-            case Single :
+            case SINGLE :
                 capacity = 1;
                 nightPrice = 400;
                 break;
-            case Double :
+            case DOUBLE :
                 capacity = 2;
                 nightPrice = 800;
-            case Suite:
+            case SUITE:
                 capacity = 4;
                 nightPrice = 1600;
         }
