@@ -28,47 +28,53 @@ public class Main {
         customerRepository.create(CustomerFactory.createCustomer("Robert", "Brown", "robert.brown@example.com", "+1122334455", LocalDate.of(1992, 9, 10)));
         customerRepository.create(CustomerFactory.createCustomer("Emily", "Davis", "emily.davis@example.com", "+441234567890", LocalDate.of(2000, 11, 30)));
         customerRepository.create(CustomerFactory.createCustomer("Michael", "Johnson", "michael.johnson@example.com", "+3311223344", LocalDate.of(1995, 3, 5)));
-        employeeRepository.create(EmployeeFactory.createEmployee("1", "Pedro", "Gonzalez", LocalDate.of(2004, 9, 17), EmployeeType.DIRECTOR,"1234"));
-        employeeRepository.create(EmployeeFactory.createEmployee("2", "Maria", "Lopez", LocalDate.of(1990, 3, 22), EmployeeType.FRONT_DESK_AGENT,"5678"));
-        employeeRepository.create(EmployeeFactory.createEmployee("3", "John", "Smith", LocalDate.of(1985, 6, 15), EmployeeType.DIRECTOR,"zdc"));
-        employeeRepository.create(EmployeeFactory.createEmployee("4", "Anna", "Taylor", LocalDate.of(1998, 12, 5), EmployeeType.STAFF_MEMBER,"abcd"));
-        employeeRepository.create(EmployeeFactory.createEmployee("5", "James", "Brown", LocalDate.of(2000, 8, 19), EmployeeType.STAFF_MEMBER,"efgh"));
+        employeeRepository.create(EmployeeFactory.createEmployee( "Pedro", "Gonzalez", LocalDate.of(2004, 9, 17), EmployeeType.DIRECTOR,"1234"));
+        employeeRepository.create(EmployeeFactory.createEmployee( "Maria", "Lopez", LocalDate.of(1990, 3, 22), EmployeeType.FRONT_DESK_AGENT,"5678"));
+        employeeRepository.create(EmployeeFactory.createEmployee( "John", "Smith", LocalDate.of(1985, 6, 15), EmployeeType.DIRECTOR,"zdc"));
+        employeeRepository.create(EmployeeFactory.createEmployee( "Anna", "Taylor", LocalDate.of(1998, 12, 5), EmployeeType.STAFF_MEMBER,"abcd"));
+        employeeRepository.create(EmployeeFactory.createEmployee( "James", "Brown", LocalDate.of(2000, 8, 19), EmployeeType.STAFF_MEMBER,"efgh"));
         roomRepository.create(RoomFactory.createRoom(1, RoomType.Single));
         roomRepository.create(RoomFactory.createRoom(2, RoomType.Double));
         roomRepository.create(RoomFactory.createRoom(3, RoomType.Suite));
         roomRepository.create(RoomFactory.createRoom(4, RoomType.Single));
         roomRepository.create(RoomFactory.createRoom(5, RoomType.Double));
         bookingRepository.create(BookingFactory.createBooking(
-                roomRepository.getAll().getFirst(), customerRepository.getAll().getFirst(), LocalDate.of(2024, 12, 1), LocalDate.of(2024, 12, 5), employeeRepository.getAll().getFirst(), 1));
+                roomRepository.getAll().getFirst(), customerRepository.getAll().getFirst(), LocalDate.of(2024, 12, 15), LocalDate.of(2024, 12, 20), employeeRepository.getAll().getFirst(), 1));
         bookingRepository.create(BookingFactory.createBooking(
-                roomRepository.getAll().get(1),  customerRepository.getAll().get(1), LocalDate.of(2024, 12, 6), LocalDate.of(2024, 12, 10),  employeeRepository.getAll().get(1), 2));
+                roomRepository.getAll().get(1),  customerRepository.getAll().get(1), LocalDate.of(2025, 1, 10), LocalDate.of(2025, 1, 15),  employeeRepository.getAll().get(1), 2));
         bookingRepository.create(BookingFactory.createBooking(
-                roomRepository.getAll().get(2),  customerRepository.getAll().get(3), LocalDate.of(2024, 12, 11), LocalDate.of(2024, 12, 15),  employeeRepository.getAll().get(1), 4));
+                roomRepository.getAll().get(2),  customerRepository.getAll().get(3), LocalDate.of(2025, 2, 12), LocalDate.of(2025, 2, 17),  employeeRepository.getAll().get(1), 4));
         bookingRepository.create(BookingFactory.createBooking(
-                roomRepository.getAll().get(2),  customerRepository.getAll().get(2), LocalDate.of(2024, 12, 16), LocalDate.of(2024, 12, 18),  employeeRepository.getAll().get(2), 2));
+                roomRepository.getAll().get(2),  customerRepository.getAll().get(2), LocalDate.of(2025, 3, 1), LocalDate.of(2025, 3, 15),  employeeRepository.getAll().get(2), 2));
         bookingRepository.create(BookingFactory.createBooking(
-                roomRepository.getAll().get(3),  customerRepository.getAll().get(4), LocalDate.of(2024, 12, 19), LocalDate.of(2024, 12, 20),  employeeRepository.getAll().get(3), 1));
-        List<String> employeeId = employeeRepository.getAll()
+                roomRepository.getAll().get(3),  customerRepository.getAll().get(4), LocalDate.of(2025, 4, 16), LocalDate.of(2025, 4, 21),  employeeRepository.getAll().get(3), 1));
+        Map<String, String> employeeId = employeeRepository.getAll()
                 .stream()
-                .map(Employee::getEmployeeNumber)
-                .toList();
+                .collect(Collectors.toMap(
+                        employee -> employee.getFirstName() + " " + employee.getLastName(),
+                        Employee::getEmployeeNumber
+                ));
 
-        int employeeLoginChoice=JOptionPane.showOptionDialog(
+        String[] employeeNames = employeeId.keySet().toArray(new String[0]);
+
+        int employeeLoginChoice = JOptionPane.showOptionDialog(
                 null,
-                "Select your id",
-                "Employee login",
-                JOptionPane.YES_NO_OPTION,
+                "Select employee profile",
+                "Employee Log in",
+                JOptionPane.DEFAULT_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
                 null,
-                employeeId.toArray(),
-                employeeId.get(0)
+                employeeNames,
+                employeeNames[0]
         );
-        Employee selectedEmployee = employeeRepository.read(employeeId.get(employeeLoginChoice));
+        String selectedName = employeeNames[employeeLoginChoice];
+        String employeeNumber = employeeId.get(selectedName);
+        Employee selectedEmployee = employeeRepository.read(employeeNumber);
         int tryNumber = 0;
         String password;
         boolean exitMenu = false;
         do {
-            password = JOptionPane.showInputDialog("Enter your password to login");
+            password = JOptionPane.showInputDialog("Enter your password to log in");
             if (!password.equals(selectedEmployee.getPassword())) {
                 tryNumber++;
                 JOptionPane.showMessageDialog(null, "Password incorrect. Please try again.");
@@ -87,7 +93,7 @@ public class Main {
                     int staffChoice = JOptionPane.showOptionDialog(
                             null,
                             "Select a task",
-                            "staff tasks",
+                            "Staff tasks",
                             JOptionPane.DEFAULT_OPTION,
                             JOptionPane.INFORMATION_MESSAGE,
                             null,
@@ -97,10 +103,10 @@ public class Main {
                     switch (staffChoice){
                         case 0 :
                             int roomId = RoomView.selectRoomId();
-                            System.out.println("Room :+"+roomId+" cleaned");
+                            System.out.println(STR."Room : \{roomId} cleaned");
                             break;
                         case 1 :
-                            System.out.println("picking baggages");
+                            System.out.println("Picking luggage");
                             break;
                         case 2 :
                             exitMenu = true;
@@ -112,7 +118,7 @@ public class Main {
                     int frontDeskChoice = JOptionPane.showOptionDialog(
                             null,
                             "Select an option",
-                            "front desk menu",
+                            "Front desk menu",
                             JOptionPane.DEFAULT_OPTION,
                             JOptionPane.INFORMATION_MESSAGE,
                             null,

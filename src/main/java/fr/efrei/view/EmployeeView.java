@@ -92,19 +92,19 @@ public class EmployeeView {
                 // update first name
                 String newFirstName = JOptionPane.showInputDialog("Enter the new first name");
                 if (!Helper.isNullOrEmpty(newFirstName))
-                    newEmp = EmployeeFactory.createEmployee(oldEmp.getEmployeeNumber(), newFirstName, oldEmp.getLastName(), oldEmp.getBirthDate(), oldEmp.getEmployeeType(), oldEmp.getEmployeePassword());
+                    newEmp = EmployeeFactory.createEmployee(oldEmp.getEmployeeNumber(), newFirstName, oldEmp.getLastName(), oldEmp.getBirthDate(), oldEmp.getEmployeeType(), oldEmp.getPassword());
                 break;
             case 1:
                 String newLastName = JOptionPane.showInputDialog("Enter the new last name");
                 if (!Helper.isNullOrEmpty(newLastName))
-                    newEmp = EmployeeFactory.createEmployee(oldEmp.getEmployeeNumber(), oldEmp.getFirstName(), newLastName, oldEmp.getBirthDate(), oldEmp.getEmployeeType(), oldEmp.getEmployeePassword());
+                    newEmp = EmployeeFactory.createEmployee(oldEmp.getEmployeeNumber(), oldEmp.getFirstName(), newLastName, oldEmp.getBirthDate(), oldEmp.getEmployeeType(), oldEmp.getPassword());
                 break;
             case 2:
                 // update birthdate
                 String newBirthDateString = JOptionPane.showInputDialog("Enter the new birth date (YYYY-MM-DD)");
                 if (!Helper.isNullOrEmpty(newBirthDateString)&&Helper.respectsDateFormat(newBirthDateString)) {
                     LocalDate newBirthDate = LocalDate.parse(newBirthDateString);
-                    newEmp = EmployeeFactory.createEmployee(oldEmp.getEmployeeNumber(), oldEmp.getFirstName(), oldEmp.getLastName(), newBirthDate, oldEmp.getEmployeeType(), oldEmp.getEmployeePassword());
+                    newEmp = EmployeeFactory.createEmployee(oldEmp.getEmployeeNumber(), oldEmp.getFirstName(), oldEmp.getLastName(), newBirthDate, oldEmp.getEmployeeType(), oldEmp.getPassword());
                 }
                 break;
             case 3:
@@ -112,7 +112,7 @@ public class EmployeeView {
                 String[] employeeTypes = { "DIRECTOR", "FRONT_DESK_AGENT", "STAFF_MEMBER" };
                 int typeChoice = JOptionPane.showOptionDialog(null, "Select the new employee type", "Update Employee Type", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, employeeTypes, employeeTypes[0]);
                 EmployeeType newType = EmployeeType.valueOf(employeeTypes[typeChoice]);
-                newEmp = EmployeeFactory.createEmployee(oldEmp.getEmployeeNumber(), oldEmp.getFirstName(), oldEmp.getLastName(), oldEmp.getBirthDate(), newType, oldEmp.getEmployeePassword());
+                newEmp = EmployeeFactory.createEmployee(oldEmp.getEmployeeNumber(), oldEmp.getFirstName(), oldEmp.getLastName(), oldEmp.getBirthDate(), newType, oldEmp.getPassword());
                 break;
             case 4:
                 // update password
