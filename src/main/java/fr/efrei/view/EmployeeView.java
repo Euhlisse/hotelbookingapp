@@ -1,7 +1,9 @@
 package fr.efrei.view;
 
+import fr.efrei.domain.Customer;
 import fr.efrei.domain.Employee;
 import fr.efrei.domain.EmployeeType;
+import fr.efrei.factory.CustomerFactory;
 import fr.efrei.factory.EmployeeFactory;
 import fr.efrei.factory.Helper;
 import fr.efrei.repository.IEmployeeRepository;
@@ -10,6 +12,7 @@ import javax.swing.*;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class EmployeeView {
     protected static IEmployeeRepository employeeRepository;
@@ -20,7 +23,6 @@ public class EmployeeView {
     }
 
     public static void createEmployee() {
-        String employeeId = JOptionPane.showInputDialog("Enter Employee ID");
         String firstName = JOptionPane.showInputDialog("Enter First Name");
         String lastName = JOptionPane.showInputDialog("Enter Last Name");
         String birthDateStr = JOptionPane.showInputDialog("Enter Birth Date (yyyy-mm-dd)");
@@ -43,19 +45,28 @@ public class EmployeeView {
 
         String password = JOptionPane.showInputDialog("Enter Password");
 
-        Employee newEmployee = EmployeeFactory.createEmployee(
-                employeeId,
-                firstName,
-                lastName,
-                birthDate,
-                employeeType,
-                password
-        );
+        Optional<Employee> idexisting;
+        Employee newEmployee = null;
+        do {
+            newEmployee = EmployeeFactory.createEmployee(
+                    firstName,
+                    lastName,
+                    birthDate,
+                    employeeType,
+                    password
+            );
+            if (newEmployee == null){
+                JOptionPane.showMessageDialog(null, "Failed to create employee. Please check the inputs.");
+                return;
+            }
+            Employee finalNewEmployee = newEmployee;
+            idexisting = employeeRepository.getAll().stream()
+                    .filter(employee -> employee.getEmployeeNumber().equals(finalNewEmployee.getEmployeeNumber()))
+                    .findFirst();
 
-        if (newEmployee == null) {
-            JOptionPane.showMessageDialog(null, "Failed to create employee. Please check the inputs.");
-            return;
-        }
+        } while (idexisting.isPresent());
+
+
         employeeRepository.create(newEmployee);
         JOptionPane.showMessageDialog(null, "Employee created successfully!");
     }
@@ -81,19 +92,19 @@ public class EmployeeView {
                 // update first name
                 String newFirstName = JOptionPane.showInputDialog("Enter the new first name");
                 if (!Helper.isNullOrEmpty(newFirstName))
-                    newEmp = EmployeeFactory.createEmployee(oldEmp.getEmployeeNumber(), newFirstName, oldEmp.getLastName(), oldEmp.getBirthDate(), oldEmp.getEmployeeType(), oldEmp.getPassword());
+                    newEmp = EmployeeFactory.createEmployee(oldEmp.getEmployeeNumber(), newFirstName, oldEmp.getLastName(), oldEmp.getBirthDate(), oldEmp.getEmployeeType(), oldEmp.getEmployeePassword());
                 break;
             case 1:
                 String newLastName = JOptionPane.showInputDialog("Enter the new last name");
                 if (!Helper.isNullOrEmpty(newLastName))
-                    newEmp = EmployeeFactory.createEmployee(oldEmp.getEmployeeNumber(), oldEmp.getFirstName(), newLastName, oldEmp.getBirthDate(), oldEmp.getEmployeeType(), oldEmp.getPassword());
+                    newEmp = EmployeeFactory.createEmployee(oldEmp.getEmployeeNumber(), oldEmp.getFirstName(), newLastName, oldEmp.getBirthDate(), oldEmp.getEmployeeType(), oldEmp.getEmployeePassword());
                 break;
             case 2:
                 // update birthdate
                 String newBirthDateString = JOptionPane.showInputDialog("Enter the new birth date (YYYY-MM-DD)");
                 if (!Helper.isNullOrEmpty(newBirthDateString)&&Helper.respectsDateFormat(newBirthDateString)) {
                     LocalDate newBirthDate = LocalDate.parse(newBirthDateString);
-                    newEmp = EmployeeFactory.createEmployee(oldEmp.getEmployeeNumber(), oldEmp.getFirstName(), oldEmp.getLastName(), newBirthDate, oldEmp.getEmployeeType(), oldEmp.getPassword());
+                    newEmp = EmployeeFactory.createEmployee(oldEmp.getEmployeeNumber(), oldEmp.getFirstName(), oldEmp.getLastName(), newBirthDate, oldEmp.getEmployeeType(), oldEmp.getEmployeePassword());
                 }
                 break;
             case 3:
@@ -101,7 +112,7 @@ public class EmployeeView {
                 String[] employeeTypes = { "DIRECTOR", "FRONT_DESK_AGENT", "STAFF_MEMBER" };
                 int typeChoice = JOptionPane.showOptionDialog(null, "Select the new employee type", "Update Employee Type", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, employeeTypes, employeeTypes[0]);
                 EmployeeType newType = EmployeeType.valueOf(employeeTypes[typeChoice]);
-                newEmp = EmployeeFactory.createEmployee(oldEmp.getEmployeeNumber(), oldEmp.getFirstName(), oldEmp.getLastName(), oldEmp.getBirthDate(), newType, oldEmp.getPassword());
+                newEmp = EmployeeFactory.createEmployee(oldEmp.getEmployeeNumber(), oldEmp.getFirstName(), oldEmp.getLastName(), oldEmp.getBirthDate(), newType, oldEmp.getEmployeePassword());
                 break;
             case 4:
                 // update password
@@ -136,8 +147,8 @@ public class EmployeeView {
 
         int employeeChoice=JOptionPane.showOptionDialog(
                 null,
-                "Select your id",
-                "Employee login",
+                "Select employee id",
+                "Employee choice",
                 0,
                 3,
                 null,
