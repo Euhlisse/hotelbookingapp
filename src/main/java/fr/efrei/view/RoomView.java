@@ -1,46 +1,44 @@
 package fr.efrei.view;
-import fr.efrei.domain.Customer;
+
 import fr.efrei.domain.Room;
 import fr.efrei.domain.RoomType;
-import fr.efrei.factory.*;
-
-import javax.swing.*;
-import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
-
-import fr.efrei.domain.Customer;
-import fr.efrei.factory.CustomerFactory;
-import fr.efrei.factory.Helper;
-import fr.efrei.repository.ICustomerRepository;
+import fr.efrei.factory.RoomFactory;
 import fr.efrei.repository.IRoomRepository;
 
 import javax.swing.*;
-import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 
 public class RoomView {
-
     protected static IRoomRepository roomRepository;
-
     public RoomView(){}
-
     public RoomView(IRoomRepository roomRepository){
         this.roomRepository = roomRepository;
     }
-
+    /*
+      private int roomNumber;
+    private int capacity;
+    private int floorNumber;
+    private String roomType;
+    private double nightPrice;
+     */
     public static void createRoom() {
 
-        int floorNumber = Integer.parseInt(JOptionPane.showInputDialog("Enter Floor Number "));
-
+        int floorNumber = Integer.parseInt(JOptionPane.showInputDialog("Enter floor number"));
+        //propose room types
         RoomType[] roomTypes = RoomType.values();
-        String[] roomTypeNames = Arrays.stream(roomTypes).map(RoomType::name)
+        String[] roomTypeNames = Arrays.stream(roomTypes)
+                .map(RoomType::name)
                 .toArray(String[]::new);
-        String selectedType = (String) JOptionPane.showInputDialog(null,
-                "Select the room type", "Room Type"
-                ,JOptionPane.QUESTION_MESSAGE, null,
-                roomTypeNames, roomTypeNames[0]);
-
+        String selectedType = (String) JOptionPane.showInputDialog(
+                null,
+                "Select Room Type",
+                "Room Type",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                roomTypeNames,
+                roomTypeNames[0]
+        );
         RoomType roomType = RoomType.valueOf(selectedType);
         Room room = RoomFactory.createRoom(floorNumber,roomType);
         if (room == null){
@@ -49,7 +47,6 @@ public class RoomView {
         }
 
     }
-
     public static void searchRoom(){roomRepository.read(selectRoomId());}
     public static void deleteRoom(){roomRepository.delete(selectRoomId());}
     public static void showRooms(){
@@ -57,7 +54,6 @@ public class RoomView {
         roomRepository.getAll().forEach((room -> stringBuilder.append(room.toString()+"\n")));
         JOptionPane.showMessageDialog(null,stringBuilder.toString());
     }
-
     public static Integer selectRoomId(){
         List<Integer> roomNumbers = roomRepository.getAll().stream()
                 .map(Room::getRoomNumber)
@@ -74,7 +70,6 @@ public class RoomView {
         );
         return roomNumbers.get(roomChoice);
     }
-
     public static void roomMenu(){
         String[] menuChoices = {
                 "Create an Room",
@@ -100,7 +95,6 @@ public class RoomView {
             default -> JOptionPane.showMessageDialog(null,"Selection error");
 
         }
-
     }
 
 }

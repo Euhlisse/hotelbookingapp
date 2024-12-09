@@ -26,7 +26,7 @@ public class BookingView {
             departureDate = LocalDate.parse(arrivalDateString);
         }
         Employee employee = EmployeeView.employeeRepository.read(EmployeeView.selectEmployeeId());
-        int nbPeople = Integer.parseInt(JOptionPane.showInputDialog("Enter the new number of people for the reservation"));
+        int nbPeople = Integer.parseInt(JOptionPane.showInputDialog("Enter the number of people for the reservation"));
         if (nbPeople>room.getCapacity()||nbPeople<=0){
             JOptionPane.showMessageDialog(null,"invalid value, can't create your booking");
             return;
