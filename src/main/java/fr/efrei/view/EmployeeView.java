@@ -44,7 +44,7 @@ public class EmployeeView {
         EmployeeType employeeType = EmployeeType.valueOf(selectedType);
 
         String password = JOptionPane.showInputDialog("Enter Password");
-
+        //check if the employee already exists
         Optional<Employee> idexisting;
         Employee newEmployee = null;
         do {
@@ -72,8 +72,7 @@ public class EmployeeView {
     }
 
     public static void searchEmployee(){
-        String idSearch = JOptionPane.showInputDialog("Enter the id of the employee you want to search");
-        JOptionPane.showMessageDialog(null,employeeRepository.read(idSearch));
+        JOptionPane.showMessageDialog(null,employeeRepository.read(selectEmployeeId()));
     }
     public static void updateEmployee() {
         String oldEmpId = selectEmployeeId();

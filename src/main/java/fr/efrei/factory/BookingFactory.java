@@ -30,7 +30,8 @@ public class BookingFactory {
             return null;
         }
         if(BookingRepository.getRepository().getAll().stream()
-                .filter(booking -> booking.getRoom().equals(room))
+                .filter(booking -> !booking.getBookingId().equals(bookingId))
+                .filter(booking -> booking.getRoom().getRoomNumber()==(room.getRoomNumber()))
                 .anyMatch(booking ->
                         (booking.getArrivalDate().isAfter(arrivalDate)&&booking.getArrivalDate().isBefore(departureDate)
                                 ||(booking.getDepartureDate().isAfter(arrivalDate)&&booking.getDepartureDate().isBefore(departureDate))
@@ -76,16 +77,18 @@ public class BookingFactory {
             return null;
         }
         if(BookingRepository.getRepository().getAll().stream()
-                .filter(booking -> booking.getRoom().equals(room))
+                .filter(booking -> !booking.getBookingId().equals(bookingId))
+                .filter(booking -> booking.getRoom().getRoomNumber()==(room.getRoomNumber()))
                 .anyMatch(booking ->
                         (booking.getArrivalDate().isAfter(arrivalDate)&&booking.getArrivalDate().isBefore(departureDate)
                                 ||(booking.getDepartureDate().isAfter(arrivalDate)&&booking.getDepartureDate().isBefore(departureDate))
                                 ||(booking.getArrivalDate().equals(arrivalDate))
-                                ||booking.getDepartureDate().equals(departureDate))))
-        {
+                                ||booking.getDepartureDate().equals(departureDate)))){
+
             System.out.println("the room is already reserved");
             return null;
         }
+
         double totalPrice = room.getNightPrice()*(ChronoUnit.DAYS.between(arrivalDate, departureDate));
         return new Booking.BuilderBooking()
                 .setBookingId(bookingId)

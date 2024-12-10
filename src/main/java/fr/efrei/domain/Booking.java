@@ -44,7 +44,7 @@ public class Booking {
     public String toString() {
         return "Booking{" +
                 "booking id=" + bookingId +
-                "room number=" + room.getRoomNumber() +
+                ", room number=" + room.getRoomNumber() +
                 ", customer=" + customer.getIdNumber() +
                 ", arrivalDate=" + arrivalDate +
                 ", departureDate=" + departureDate +

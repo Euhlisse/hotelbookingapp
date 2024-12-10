@@ -47,7 +47,9 @@ public class RoomView {
         }
 
     }
-    public static void searchRoom(){roomRepository.read(selectRoomId());}
+    public static void searchRoom(){
+        JOptionPane.showMessageDialog(null,roomRepository.read(selectRoomId()));
+    }
     public static void deleteRoom(){roomRepository.delete(selectRoomId());}
     public static void showRooms(){
         StringBuilder stringBuilder = new StringBuilder();

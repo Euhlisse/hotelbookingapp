@@ -24,7 +24,7 @@ public class CustomerView {
         Optional<Customer> idexisting;
         Customer newCustomer;
         do {
-            newCustomer = CustomerFactory.createCustomer(firstName, lastName, phone, email, birthDate);
+            newCustomer = CustomerFactory.createCustomer(firstName, lastName, email, phone, birthDate);
             if (newCustomer == null){
                 JOptionPane.showMessageDialog(null, "Failed to create customer. Please check the inputs.");
                 return;
@@ -39,8 +39,7 @@ public class CustomerView {
         JOptionPane.showMessageDialog(null, "Customer created successfully!");
     }
     public static void searchCustomer(){
-        String idSearch = JOptionPane.showInputDialog("Enter the id of the Customer you want to search");
-        JOptionPane.showMessageDialog(null,customerRepository.read(idSearch));
+        JOptionPane.showMessageDialog(null,customerRepository.read(selectCustomerId()));
     }
     public static void deleteCustomer(){
         customerRepository.delete(selectCustomerId());
